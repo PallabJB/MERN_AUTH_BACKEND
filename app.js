@@ -11,12 +11,23 @@ import { removeUnverifiedAccounts } from './automation/removeUnverifiedAccounts.
 export const app = express();
 config({path: './config.env'});
 
+const allowedOrigins = [
+  "http://localhost:5173",
+  "https://mern-authentication-by-pj.netlify.app",
+];
+
 app.use(cors({
-    origin: [process.env.FRONTEND_URL],
-    methods:['GET', 'POST', 'PUT', 'DELETE'],
-    credentials: true,
-    })
-);
+  origin: function (origin, callback) {
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error("CORS not allowed for this origin: " + origin));
+    }
+  },
+  methods: ['GET', 'POST', 'PUT', 'DELETE'],
+  credentials: true,
+}));
+
 
 app.use(cookieParser());
 app.use(express.json());
