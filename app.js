@@ -13,7 +13,7 @@ config({path: './config.env'});
 
 const allowedOrigins = [
   "http://localhost:5173",
-  "https://mern-authentication-pj.netlify.app",
+  "https://mern-authentication-made-by-pj.netlify.app",
 ];
 
 app.use(cors({
